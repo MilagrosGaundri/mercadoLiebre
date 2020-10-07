@@ -15,6 +15,6 @@ router.post('/add/form',upImagesProducts.any(), productsController.publicar)
 router.get('/show/:id/:flap?', productsController.show)
 
 router.put('/edit/:id', upImagesProducts.any(),productsController.editar)
-
+router.delete('/delete/:id',productsController.eliminar)
 
 module.exports= router;
