@@ -67,10 +67,62 @@ module.exports ={
             discount:Number(req.body.discount),
             category:req.body.category.trim(),
             description:req.body.description.trim(),
-            image:(req.files[0])?req.files[0].filename:"default-image.png"
+            image: (req.files[0])?req.files[0].filename:"default-image.png"
         }
         dbProducts.push(newProduct);
         fs.writeFileSync(path.join(__dirname,"..","data","productsDataBase.json"),JSON.stringify(dbProducts),'utf-8')
         res.redirect('/products')
+    },
+    show:(req,res)=>{
+        let idProducto = req.params.id;
+        
+        let flap = req.params.flap;
+        let activeDetail;
+        let activeEdit;
+        let showDetail;
+        let showEdit;
+
+        if(flap == "show"){
+            activeDetail = "active";
+            showDetail = "show";
+        }else{
+            activeEdit = "active";
+            showEdit = "show";
+        }
+
+        let resultado = dbProducts.filter(producto =>{
+            return producto.id == idProducto
+        })
+
+        res.render('productShow',{
+            title: "Ver / Editar Producto",
+            css: 'products.css',
+            total: dbProducts.length,
+            categorias:dbCategorias,
+            producto: resultado[0],
+            activeDetail:activeDetail,
+            activeEdit:activeEdit,
+            showEdit:showEdit,
+            showDetail:showDetail
+        })
+
+    },
+    editar:function(req,res){
+
+        let idProducto = req.body.id;
+
+        dbProducts.forEach(producto =>{
+            if(producto.id == idProducto){
+                producto.id = Number(req.body.id),
+                producto.name = req.body.name.trim(),
+                producto.price = Number(req.body.price),
+                producto.discount = Number(req.body.discount),
+                producto.category = req.body.category.trim(),
+                producto.description = req.body.description.trim(),
+                producto.image = (req.files[0])?req.files[0].filename:'producto.image'
+            }
+        })
+        fs.writeFileSync(path.join(__dirname,'../data/productsDataBase.json'),JSON.stringify(dbProducts),'utf-8');
+        res.redirect('/products/show/'+ idProducto + '/show')
     }
 }

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productsController = require('../controllers/productsController')
+
 const  upImagesProducts =require('../middlewares/upImagesProducts')
 
 router.get('/',productsController.listar);
@@ -11,6 +12,9 @@ router.get('/search',productsController.search);
 router.get('/add', productsController.agregar)
 router.get('/add/form', productsController.agregar)
 router.post('/add/form',upImagesProducts.any(), productsController.publicar)
+router.get('/show/:id/:flap?', productsController.show)
+
+router.put('/edit/:id', upImagesProducts.any(),productsController.editar)
 
 
 module.exports= router;
