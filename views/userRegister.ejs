@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-	<%- include('partials/head') %>
+<%- include('partials/head') %>
 
 <body>
 	<%- include('partials/header') %>
@@ -28,24 +28,24 @@
 										<div class="form-group col-12 col-xl-6">
 											<label for="nombre"></label>
 											<input type="text"
-												class="form-control "
+												class="form-control <%= (typeof old != 'undefined' && old.nombre)?"is-valid":(typeof errors != 'undefined' && errors.nombre)?"is-invalid": ""  %>"
 												id="nombre" name="nombre"
-												value=""
+												value="<%= (typeof old != 'undefined' && old.nombre)?old.nombre:'' %>"
 												placeholder="nombre" />
 											<small
-												class="text-danger">
+												class="text-danger"><%= (typeof errors != 'undefined' && errors.nombre)?errors.nombre.msg: "" %>
 											</small>
 										</div>
 
 										<div class="form-group col-12 col-xl-6">
 											<label for="apellido"></label>
 											<input type="text"
-												class="form-control "
+												class="form-control <%= (typeof old != 'undefined' && old.apellido)?"is-valid":(typeof errors != 'undefined' && errors.apellido)?"is-invalid": ""  %>"
 												id="apellido"
-												value=""
+												value="<%= (typeof old != 'undefined' && old.apellido)?old.apellido:'' %>"
 												placeholder="apellido" name="apellido" />
 											<small
-												class="text-danger">
+												class="text-danger"><%= (typeof errors != 'undefined' && errors.apellido)?errors.apellido.msg: "" %>
 											</small>
 										</div>
 
@@ -55,20 +55,20 @@
 										<div class="form-group col-12 col-xl-6">
 											<label for="pass"></label>
 											<input type="password"
-												class="form-control "
+												class="form-control <%= (typeof errors != 'undefined' && errors.pass)?"is-invalid": ""  %>"
 												id="pass" placeholder="contraseña" name="pass" />
 											<small
-												class="text-danger">
+												class="text-danger"><%= (typeof errors != 'undefined' && errors.pass)?errors.pass.msg: "" %>
 											</small>
 										</div>
 
 										<div class="form-group col-12 col-xl-6">
 											<label for="pass2"></label>
 											<input type="password"
-												class="form-control "
+												class="form-control <%= (typeof errors != 'undefined' && errors.pass2)?"is-invalid": ""  %>"
 												id="pass2" placeholder="reingresar contraseña" name="pass2" />
 											<small
-												class="text-danger">
+												class="text-danger"><%= (typeof errors != 'undefined' && errors.pass2)?errors.pass2.msg: "" %>
 											</small>
 
 										</div>
@@ -78,12 +78,12 @@
 										<div class="form-group col-12 col-xl-6">
 											<label for="email"></label>
 											<input type="email"
-												class="form-control "
+												class="form-control <%= (typeof old != 'undefined' && old.email && !errors.email)?"is-valid":(typeof errors != 'undefined' && errors.email)?"is-invalid": ""  %>"
 												id="email"
-												value=""
+												value="<%= (typeof old != 'undefined' && old.email)?old.email:'' %>"
 												placeholder="email" name="email" />
 											<small
-												class="text-danger">
+												class="text-danger"><%= (typeof errors != 'undefined' && errors.email)?errors.email.msg: "" %>
 											</small>
 										</div>
 
@@ -94,7 +94,7 @@
 												<label class="custom-file-label" for="customFileLang">Seleccionar
 													Archivo</label>
 												<small
-													class="text-danger">
+													class="text-danger"><%= (typeof errorFormato != 'undefined')?errorFormato: "" %>
 												</small>
 											</div>
 										</div>
@@ -104,7 +104,7 @@
 										<div class="col-12 col-lg-6 mt-2">
 											<div class="custom-control custom-checkbox">
 												<input type="checkbox"
-													class="custom-control-input "
+													class="custom-control-input <%= (typeof old != 'undefined' && old.bases)?"is-valid":(typeof errors != 'undefined' && errors.bases)?"is-invalid": ""  %>"
 													id="customCheck1" name="bases">
 												<label class="custom-control-label" for="customCheck1">acepto las bases
 													y
@@ -112,7 +112,7 @@
 												<a href="" class="text-info">ver bases y condiciones</a><br>
 
 												<small
-													class="text-danger">
+													class="text-danger"><%= (typeof errors != 'undefined' && errors.bases)?errors.bases.msg: "" %>
 												</small>
 											</div>
 										</div>

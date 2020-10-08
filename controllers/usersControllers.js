@@ -1,7 +1,7 @@
 const fs= require('fs');
 const path = require('path');
 const bcrypt =require('bcrypt');
-// const {validationResult}=require('express-validator');
+const {validationResult}=require('express-validator');
 
 const dbProducts =require(path.join(__dirname,'..','data','dbProducts'));
 const dbUsers =require(path.join(__dirname,'..','data','dbUsers'));
@@ -14,6 +14,7 @@ module.exports={
         })
     },
     processRegister:(req,res)=>{
+        let errors =validationResult(req);
         let lastID = 1;
         if(dbUsers.length != 0){
             dbUsers.forEach(user=>{
@@ -22,28 +23,62 @@ module.exports={
                 }
             })
         }
-        let newUser={
-            id: lastID +1 ,
-            nombre: req.body.nombre.trim(),
-            apellido:req.body.apellido.trim(),
-            email:req.body.email.trim(),
-            avatar:(req.files[0])?req.files[0].filename:'foto-undefined.png',
-            password:bcrypt.hashSync(req.body.pass,10),
-            rol:'user'
+        if(errors.isEmpty()){
+            let newUser={
+                id: lastID +1 ,
+                nombre: req.body.nombre.trim(),
+                apellido:req.body.apellido.trim(),
+                email:req.body.email.trim(),
+                avatar:(req.files[0])?req.files[0].filename:'foto-undefined.png',
+                password:bcrypt.hashSync(req.body.pass,10),
+                rol:'user'
+            }
+            dbUsers.push(newUser)
+            fs.writeFileSync(path.join(__dirname,'..','data','dbUsers.json'),JSON.stringify
+            (dbUsers),'utf-8')
+            return res.redirect('/users/login')
+        }else{
+            res.render('userRegister',{
+                title:'Registro de usuario',
+                css:'index.css',
+                errors:errors.mapped(),
+                old:req.body
+            })
         }
-        dbUsers.push(newUser)
-        fs.writeFileSync(path.join(__dirname,'..','data','dbUsers.json'),JSON.stringify
-        (dbUsers),'utf-8')
-        return res.redirect('/users/login')
     },
-    login:(req,res)=>{
+    login:function(req,res){
         res.render('userLogin',{
-            title:'Ingresá a tu cuenta',
-            css:'index.css'
+            title:"Ingresá a tu cuenta",
+            css: 'index.css'
         })
     },
-    processLogin:(req,res)=>{
-
+    processLogin:function(req,res){
+        let errors = validationResult(req);
+        if(errors.isEmpty()){
+            dbUsers.forEach(user => {
+                if(user.email == req.body.email){
+                    req.session.user = {
+                        id: user.id,
+                        nick: user.nombre + " " + user.apellido,
+                        email: user.email,
+                        avatar:user.avatar
+                    }
+                }
+            })
+            if(req.body.recordar){
+                res.cookie('userMercadoLiebre',req.session.user,{maxAge:1000*60*60})
+            }
+            //res.locals.user = req.session.user
+            //console.log(res.locals.user)
+            res.redirect('/')
+        }else{
+            res.render('userLogin',{
+                title: "Ingresá a tu cuenta",
+                css:"index.css",
+                errors:errors.mapped(),
+                old:req.body
+            })
+        }
     },
     profile:(req,res)=>{
         res.render('userProfile',{
@@ -55,4 +90,11 @@ module.exports={
             
         })
     },
+    logout:function(req,res){
+        req.session.destroy()
+        if(req.cookies.userMercadoLiebre){
+            res.cookie('userMercadoLiebre',' ',{maxAge:-1});
+        }
+        return res.redirect('/')
+    }
 }

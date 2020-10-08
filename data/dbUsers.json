@@ -4,7 +4,7 @@
         "nombre": "Eric",
         "apellido": "Mena",
         "email": "menaericdaniel@gmail.com",
-        "avatar": "avatar-1600456532601.jpg",
+        "avatar": "foto-undefined.png",
         "password": "$2b$10$mcKJXzBH2wxFM00lFp4jZunGttkFUI/vMHs718EDRTbHlVf3dav6e",
         "rol": "user"
     },
@@ -13,7 +13,7 @@
         "nombre": "Gabriel",
         "apellido": "Muñoz",
         "email": "gabriel@muñoz.com",
-        "avatar": "avatar-1600887962758.jpg",
+        "avatar": "foto-undefined.png",
         "password": "$2b$10$JH5g4x61fS4At0cq8mk0jucrl4ebwzkcm.BPkIiGsGHQWwzdk1ejW",
         "rol": "user"
     },
@@ -22,7 +22,7 @@
         "nombre": "Ramiro",
         "apellido": "Cano",
         "email": "ramiro@cano.com",
-        "avatar": "avatar-1600888062028.jpg",
+        "avatar": "foto-undefined.png",
         "password": "$2b$10$LmlqStebde5LKu/fEJEtCORXNxyFqHLi71OIv1kteyHbyaklZaSGa",
         "rol": "user"
     },
@@ -31,7 +31,7 @@
         "nombre": "Javier",
         "apellido": "Zambrano",
         "email": "javier@zambrano.com",
-        "avatar": "avatar-1600889305243.jpg",
+        "avatar": "foto-undefined.png",
         "password": "$2b$10$.yn8LEoJObD0mgAxjDDuDe0bzokdrJd8YWo/Vg6yV7S6HasRUVC3W",
         "rol": "user"
     },
@@ -41,7 +41,7 @@
         "apellido": "Gaundri",
         "email": "miligaundri10@gmail.com",
         "avatar": "foto-undefined.png",
-        "password": "$2b$10$BY8pNi7ubIb41XtXbYlUhuSL7NtRZy8K/oIo/W4WuImAWqf4HCS/S",
+        "password": "$2b$10$W6l7xO4HiKaZFSGlvB0Leei3.t6ClQ/Pv/BnCOYyKCa8Ahpp7TjtO",
         "rol": "user"
     }
 ]
