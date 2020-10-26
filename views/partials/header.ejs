@@ -4,10 +4,8 @@
     <!--caja que contiene el logotipo, el buscador y botón con un link-->
     <div class="row">
       <!--caja que contiene el logotipo-->
-      <div class="col-5 col-md-2  logo">
-        <a href="/"
-          ><img src="/images/logo-mercado-liebre.svg " alt=" "
-        /></a>
+      <div class="col-5 col-md-2 col-lg-2 logo">
+        <a href="/"><img src="/images/logo-mercado-liebre.svg " alt=" "></a>
       </div>
 
       <!--caja que contiene el formulario-->
@@ -23,14 +21,19 @@
 
       <!--caja que contiene el link-->
       <div class="col-12 col-md-4 col-lg-4 d-flex justify-content-end align-items-center cuotas">
-        <a href=""><h5 class="mr-2"><%= (locals.user)?locals.user.nick:"Invitado" %> </h5></a>
-        <% if (locals.user) { %>
-            <a href=""><img class="avatar" src="/images/users/<%= locals.user.avatar %> " alt="avatar" width="50px" height="50px" class="avatar"></a>
+        <a href=""><h5 class="mr-2"><%= (typeof user != "undefined" && user)?user.nick:"Invitado" %> </h5></a>
+        <% if (typeof user != "undefined" && user) { %>
+
+          <% if (user.rol == "store") { %>
+            <a href=""><img src="/images/logos/<%=user.avatar %> " alt="avatar" width="50px" height="50px" class="avatar"></a>
+          <% } else{%>
+            <a href=""><img src="/images/users/<%=user.avatar %> " alt="avatar" width="50px" height="50px" class="avatar"></a>
+          <% } %>
 
         <% } else{%>
-        <a href=""><img class="avatar" src="/images/users/foto-undefined.png" alt="" width="50px" height="50px"></a>
+          <a href=""><img src="/images/users/foto-undefined.png" alt="" width="50px" height="50px"></a>
         <% } %>
-    </div>
+      </div>
 
       <!--finaliza el div.row-->
     </div>
@@ -54,36 +57,59 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!--barra de menu izquierdo-->
         <ul class="menu navbar-nav mr-auto">
-          <li>
-            <a href=" ">Ofertas</a>
-          </li>
-          <li>
-            <a href=" ">Tiendas Oficiales</a>
-          </li>
-          <li>
-            <a href="/products/add">Vender</a>
-          </li>
-          <li>
-            <a href=" ">Ayuda</a>
+          <li class="">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-store"></i>  Tiendas oficiales
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/users/register">Registrarse</a>
+                <a class="dropdown-item" href="/users/list">Ver tiendas</a>
+              
+                  <% if (typeof user != "undefined" && user.rol=="store") { %>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="/products/add">Publicar productos</a>
+                      <a class="dropdown-item" href="/products/list">Listar productos</a>
+
+                  <% } %>
+              </div>
           </li>
         </ul>
 
         <!--barra de menu: login y registro-->
         <ul class="usuario navbar-nav">
-          <% if (typeof user == "undefined") { %>
+          <% if (typeof locals.user != "undefined") { %>
               <li>
-                  <a href="/users/login">Ingresá <i class="fas fa-sign-in-alt "></i></a>
+                  <a href="#" class="nav-link"><i class="fas fa-shopping-basket "></i> Mi compra </a>
               </li>
+              <li class="">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-user-alt "></i>  Mi cuenta
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/users/profile">Mi perfil</a>
+                    <a class="dropdown-item" href="">Cambiar contraseña</a>
+                    <a class="dropdown-item" href="/users/logout">Cerrar sesión</a>
+                    <% if (typeof user != "undefined" && user.rol=="admin") { %>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="/admin/categorieAdd">Agregar categoria</a>
+                      <a class="dropdown-item" href="/admin/categorieList">Ver categorias</a>
+                      <% } %>
+                      <% if (typeof user != "undefined" && user.rol=="store") { %>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="/admin/categorieList">Ver categorias</a>
+                          <% } %>
+                  </div>
+                </li>
+              
+          <% } else{ %>
+          
               <li>
                   <a href="/users/register">Creá tu cuenta <i class="far fa-address-card "></i></a>
               </li>
-          <% } else{ %>
               <li>
-                  <a href="/users/logout">Cerrar sesión <i class="fas fa-sign-in-alt "></i></a>
+                  <a href="/users/login">Ingresá <i class="fas fa-sign-in-alt "></i></a>
               </li>
-              <li>
-                  <a href="/users/profile ">Mis compras <i class="fas fa-shopping-basket "></i></a>
-              </li>
+              
           <% } %>
       </ul>
       </div>

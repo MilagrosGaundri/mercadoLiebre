@@ -25,7 +25,7 @@ module.exports = [
             return true
         }
     })
-    .withMessage("El ususario no está registrado"),
+    .withMessage("El usuario no está registrado"),
 
     body('pass')
     .custom(function(value,{req}){
